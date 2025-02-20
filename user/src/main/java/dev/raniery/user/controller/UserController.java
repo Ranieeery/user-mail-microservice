@@ -32,7 +32,7 @@ public class UserController {
         var userModel = new UserModel();
         BeanUtils.copyProperties(userRecordDTO, userModel);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.saveUser(userModel));
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(userModel));
     }
 
     @GetMapping("/users")
