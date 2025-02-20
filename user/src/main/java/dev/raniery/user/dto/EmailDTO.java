@@ -7,7 +7,7 @@ public class EmailDTO {
     private UUID userId;
     private String emailTo;
     private String subject;
-    private String body;
+    private String text;
 
     public UUID getUserId() {
         return userId;
@@ -33,11 +33,11 @@ public class EmailDTO {
         this.subject = subject;
     }
 
-    public String getBody() {
-        return body;
+    public String getText() {
+        return text;
     }
 
-    public void setBody(String body) {
-        this.body = body;
+    public void setText(String text) {
+        this.text = text;
     }
 }

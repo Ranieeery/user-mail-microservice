@@ -23,7 +23,7 @@ public class UserProducer {
         emailDTO.setUserId(userModel.getUserId());
         emailDTO.setEmailTo(userModel.getUserEmail());
         emailDTO.setSubject("Welcome to our platform!");
-        emailDTO.setBody(userModel.getUserName() + ", welcome to our platform! \nWe are glad to have you here!");
+        emailDTO.setText(userModel.getUserName() + ", welcome to our platform! \nWe are glad to have you here!");
 
         rabbitTemplate.convertAndSend("", routingKey, emailDTO);
     }

@@ -3,6 +3,7 @@ package dev.raniery.email.models;
 import dev.raniery.email.enums.StatusEmail;
 import jakarta.persistence.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -10,6 +11,9 @@ import java.util.UUID;
 @Entity
 @Table(name = "TB_EMAILS")
 public class EmailModel implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,8 +23,8 @@ public class EmailModel implements Serializable {
     private String emailTo;
     private String subject;
 
-    @Column(columnDefinition = "BODY")
-    private String body;
+    @Column(columnDefinition = "TEXT")
+    private String text;
 
     private LocalDateTime sendDate;
     private StatusEmail statusEmail;
@@ -41,12 +45,12 @@ public class EmailModel implements Serializable {
         this.sendDate = sendDate;
     }
 
-    public String getBody() {
-        return body;
+    public String getText() {
+        return text;
     }
 
-    public void setBody(String body) {
-        this.body = body;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public String getSubject() {

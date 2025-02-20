@@ -17,6 +17,7 @@ public class EmailService {
 
     private final EmailRepository emailRepository;
     private final JavaMailSender mailSender;
+
     @Value(value = "${spring.mail.username}")
     private String emailFrom;
 
@@ -26,7 +27,7 @@ public class EmailService {
     }
 
     @Transactional
-    public EmailModel sendMail(EmailModel emailModel) {
+    public void sendMail(EmailModel emailModel) {
         try {
             emailModel.setSendDate(LocalDateTime.now());
             emailModel.setEmailFrom(emailFrom);
@@ -34,15 +35,14 @@ public class EmailService {
             SimpleMailMessage msg = new SimpleMailMessage();
             msg.setTo(emailModel.getEmailTo());
             msg.setSubject(emailModel.getSubject());
-            msg.setText(emailModel.getBody());
+            msg.setText(emailModel.getText());
             mailSender.send(msg);
 
             emailModel.setStatusEmail(StatusEmail.SENT);
         } catch (MailException e) {
             emailModel.setStatusEmail(StatusEmail.ERROR);
-        } finally {
-            return emailRepository.save(emailModel);
         }
 
+        emailRepository.save(emailModel);
     }
 }
