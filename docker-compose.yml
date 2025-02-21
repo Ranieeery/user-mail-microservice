@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  postgres-user:
+    image: postgres:latest
+    restart: always
+    env_file: .env
+    ports:
+      - "5432:5432"  # opcional, se quiser expor externamente
+    volumes:
+      - ./postgres-init/user/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres_user_data:/var/lib/postgresql/data
+
+  postgres-email:
+    image: postgres:latest
+    restart: always
+    env_file: .env
+    ports:
+      - "5433:5432"  # outra porta para evitar conflito
+    volumes:
+      - ./postgres-init/email/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres_email_data:/var/lib/postgresql/data
+
+  user:
+    build: ./user
+    depends_on:
+      - postgres-user
+    env_file: .env
+    ports:
+      - "${USER_PORT}:8081"
+
+  email:
+    build: ./email
+    depends_on:
+      - postgres-email
+    env_file: .env
+    ports:
+      - "${EMAIL_PORT}:8082"
+
+volumes:
+  postgres_user_data:
+  postgres_email_data:
